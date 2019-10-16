@@ -11,16 +11,6 @@ const items = [
 ];
 
 class ItemsList extends Component {
-    state = {
-        isCollapsed: false
-    };
-
-    toggle = () => {
-        this.setState(prevState => ({
-            isCollapsed: !prevState.isCollapsed
-        }));
-    }
-
     render() {
         const listClass = cx(styles.list, {
             [styles.isCollapsed]: this.state.isCollapsed
