@@ -34,7 +34,6 @@ const Patterns = () => (
                 </div>
             </div>
         )}
-    >
     </Downshift>
 );
 
