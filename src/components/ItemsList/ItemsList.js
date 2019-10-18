@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './ItemsList.module.scss';
 import cx from 'classnames';
-import withCollapse from '../../hoc/withCollapse';
+// import withCollapse from '../../hoc/withCollapse';
+import Collapse from "../../providers/Collapse";
 
 const items = [
   '1st',
@@ -11,21 +12,26 @@ const items = [
   '5th'
 ];
 
-const ItemsList = ({ isCollapsed, toggle }) => {
-    const listClass = cx(styles.list, {
-        [styles.isCollapsed]: isCollapsed
-    });
+const ItemsList = () => {
+    const listClass = isCollapsed =>
+        cx(styles.list, {
+            [styles.isCollapsed]: isCollapsed
+        });
 
     return (
-        <>
-            <button className="button is-dark is-large" onClick={toggle}>collapse</button>
-            <ul className={listClass}>
-                {items.map(item => (
-                    <li className="notification is-primary">{item}</li>
-                ))}
-            </ul>
-        </>
+        <Collapse
+            render={({ isCollapsed, toggle }) => (
+                <>
+                    <button className="button is-dark is-large" onClick={toggle}>show/collapse</button>
+                    <ul className={listClass(isCollapsed)}>
+                        {items.map(item => (
+                            <li className="notification is-primary">{item}</li>
+                        ))}
+                    </ul>
+                </>
+            )}
+        />
     )
 }
 
-export default withCollapse(ItemsList);
+export default ItemsList;
