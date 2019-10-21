@@ -6,6 +6,7 @@ import Tips from "./views/Tips.js";
 import Patterns from "./views/Patterns.js";
 import Components from "./views/Components.js";
 import Users from "./views/Users.js";
+import Contacts from "./views/Contacts.js";
 import styles from "./App.module.scss";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/patterns" exact component={Patterns} />
                 <Route path="/components" exact component={Components} />
                 <Route path="/users" exact component={Users} />
+                <Route path="/contacts" exact component={Contacts} />
             </div>
         </Router>
     );
