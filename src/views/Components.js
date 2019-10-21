@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 
 const Components = () => {
-    const [inputContent, setInputContent] = useState("write your task");
+    const [inputsContent, setInputContent] = useReducer(
+(state, newState) => ({ ...state, ...newState }),
+        {
+            searchInputContent: "",
+            itemInputContent: ""
+        }
+    );
 
     const [itemsList, setItemsList] = useState(
         [{
@@ -11,12 +17,14 @@ const Components = () => {
     );
 
     const handleInputChange = e => {
-        setInputContent(e.target.value);
+        setInputContent({
+            [e.target.name]: e.target.value
+        });
     };
 
     const addNewItem = () => {
         const newElement = {
-            content: inputContent,
+            content: inputsContent.itemInputContent,
             id: itemsList.length + 1
         };
 
@@ -35,16 +43,19 @@ const Components = () => {
             <input
                 autoComplete="off"
                 className="input"
-                name="name"
+                name="searchInputContent"
+                placeholder="search items"
                 onChange={handleInputChange}
-                value={inputContent}
+                value={inputsContent.searchInputContent}
             />
+            <hr />
             <input
                 autoComplete="off"
                 className="input"
-                name="name"
+                name="itemInputContent"
+                placeholder="create new item"
                 onChange={handleInputChange}
-                value={inputContent}
+                value={inputsContent.itemInputContent}
             />
             <button
                 onClick={addNewItem}
@@ -53,14 +64,19 @@ const Components = () => {
                 Add item
             </button>
             {
-                itemsList.map(item => (
-                    <div key={item.id} className="notification is-info">
-                        <button className="delete" onClick={() => removeItem(item.id)}></button>
-                        {item.content}
-                    </div>
-                ))
+                itemsList
+                    .filter(item =>
+                        item.content.toLowerCase().includes(
+                            inputsContent.searchInputContent.toLowerCase()
+                        )
+                    )
+                    .map(item => (
+                        <div key={item.id} className="notification is-info">
+                            <button className="delete" onClick={() => removeItem(item.id)}></button>
+                            {item.content}
+                        </div>
+                    ))
             }
-
         </>
     )
 };
